@@ -1,0 +1,391 @@
+<div id="sj">
+  <header class="top">
+    <div class="wrap nav">
+      <a class="brand" href="#" id="navHome">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FF3D00"></stop>
+              <stop offset="0.5" stop-color="#FF6A00"></stop>
+              <stop offset="1" stop-color="#FFD200"></stop>
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="16" fill="url(#g)"></circle>
+          <g stroke="#FF8A00" stroke-width="4" stroke-linecap="round">
+            <path d="M32 6v10"></path><path d="M32 48v10"></path>
+            <path d="M6 32h10"></path><path d="M48 32h10"></path>
+          </g>
+        </svg>
+        <div>
+          <div class="word">sunjet</div>
+          <small>ultra-low fares • fly toward the sun</small>
+        </div>
+      </a>
+
+      <nav class="links">
+        <a href="#" id="navBook">Book</a>
+        <a href="#" id="navDeals">Deals</a>
+        <a href="#" id="navStatus">Flight status</a>
+        <a href="#" id="navCheckin">Check-in</a>
+        <a href="#" id="navManage">Manage</a>
+        <a href="#" id="navDest">Destinations</a>
+        <a href="#" id="navFleet">Fleet</a>
+        <a href="#" id="navMap">Route map</a>
+        <a href="#" id="navHelp">Help</a>
+      </nav>
+
+      <div class="actions">
+        <span class="pill">USD</span>
+        <span class="pill">EN/ES</span>
+        <button class="btn ghost" id="btnReset">Reset</button>
+        <button class="btn" id="btnSignin">Sign in</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME / BOOK -->
+    <section class="page" id="home">
+      <div class="wrap hero">
+        <div class="heroGrid">
+          <div>
+            <div class="tag"><span class="dot"></span> Miami-based ULCC • MIA hub • Latin & Caribbean focus</div>
+            <h1>Fly Toward the Sun.</h1>
+            <p class="lede">
+              SunJet (fictional) connects Florida to the Caribbean + Latin America, and brings the North down to sunshine.
+              Customize your trip with bundles, seats, and bags.
+            </p>
+
+            <div class="sunPanel">
+              <div class="sunPanelTop">
+                <div>
+                  <b>Today’s deals</b><br>
+                  <span class="muted">Limited seats • Base fare only</span>
+                </div>
+                <div class="dealRow">
+                  <span class="chip">MIA → SJU <b>$39</b></span>
+                  <span class="chip">MIA → SDQ <b>$49</b></span>
+                  <span class="chip">MIA → BOG <b>$69</b></span>
+                  <button class="btn sun" id="btnDealsQuick">View deals</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini"><b>Fleet:</b> Airbus A320ceo • A320neo • A321ceo • A321neo</div>
+          </div>
+
+          <div class="card book" id="book">
+            <div class="bookTop">
+              <b>Search flights</b>
+              <div class="seg">
+                <button class="active" id="tripRound">Roundtrip</button>
+                <button id="tripOne">One-way</button>
+              </div>
+            </div>
+
+            <div class="grid">
+              <div><label>From</label><input id="from" value="MIA"></div>
+              <div><label>To</label><select id="to"></select></div>
+              <div><label>Depart</label><input id="depart" type="date"></div>
+              <div id="returnWrap"><label>Return</label><input id="ret" type="date"></div>
+              <div><label>Passengers</label>
+                <select id="pax">
+                  <option>1 Adult</option><option>2 Adults</option><option>3 Adults</option><option>4 Adults</option>
+                </select>
+              </div>
+              <div><label>Promo</label><input id="promo" placeholder="SUNNY"></div>
+              <div class="span2"><button class="btn sun big" id="btnSearch">Search flights</button></div>
+            </div>
+
+            <div class="fine">Demo site. Base fare excludes optional extras.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="page hidden" id="results">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Select flights</div>
+        <h2 class="title">Select your fare</h2>
+        <p class="lede" id="summary">Loading…</p>
+
+        <div class="card pad">
+          <div class="bar">
+            <b>Available flights</b>
+            <span class="badge"><span class="dot2"></span> Choose BASIC / PLUS / MAX</span>
+          </div>
+          <div id="flightList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEATS -->
+    <section class="page hidden" id="seats">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Seat selection</div>
+        <h2 class="title">Choose your seat</h2>
+        <p class="lede" id="seatSummary">Loading…</p>
+
+        <div class="twoCol">
+          <div class="card pad">
+            <b>Seat map (A320 family demo)</b>
+            <div class="muted" style="margin-top:6px">UpFront rows 1–3 • Stretch rows 12–16 • Some seats unavailable</div>
+            <div class="seatBox"><div class="seatMap" id="seatMap"></div></div>
+          </div>
+
+          <div class="card pad">
+            <b>Your trip</b>
+            <div class="note" id="tripBox">Loading…</div>
+            <div class="note" id="seatPick">Selected seat: none</div>
+            <div class="btnRow">
+              <button class="btn ghost" id="btnBackToResults">Back</button>
+              <button class="btn sun" id="btnToBags" disabled>Continue to bags</button>
+            </div>
+            <div class="fine">PLUS includes Standard seats. MAX includes any seat.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BAGS -->
+    <section class="page hidden" id="bags">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Bags</div>
+        <h2 class="title">Add bags</h2>
+        <div class="twoCol">
+          <div class="card pad">
+            <b>Your selection</b>
+            <div class="note" id="bagTripBox">Loading…</div>
+
+            <div class="addon">
+              <div><b>Carry-on</b><div class="muted">Overhead bin</div></div>
+              <label class="toggle"><input id="carryOn" type="checkbox"><span>Add (+$49)</span></label>
+            </div>
+
+            <div class="addon">
+              <div><b>1st checked bag</b><div class="muted">Up to 50 lb</div></div>
+              <label class="toggle"><input id="checked1" type="checkbox"><span>Add (+$45)</span></label>
+            </div>
+
+            <div class="fine">PLUS includes carry-on. MAX includes carry-on + 1 checked.</div>
+          </div>
+
+          <div class="card pad">
+            <b>Total (demo)</b>
+            <div class="price"><span id="grandTotal">$0</span> <small>USD</small></div>
+            <div class="btnRow">
+              <button class="btn ghost" id="btnBackToSeats">Back</button>
+              <button class="btn sun" id="btnToCheckout">Continue to checkout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKOUT -->
+    <section class="page hidden" id="checkout">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Checkout</div>
+        <h2 class="title">Checkout</h2>
+        <div class="card pad" id="checkoutBox">Loading…</div>
+        <div class="btnRow" style="margin-top:12px">
+          <button class="btn ghost" id="btnBackToBags">Back</button>
+          <button class="btn sun" id="btnFinish">Finish</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEALS -->
+    <section class="page hidden" id="deals">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Deals</div>
+        <h2 class="title">Flash fares</h2>
+        <p class="lede">Pick a deal to pre-fill your booking.</p>
+        <div class="card pad" id="dealGrid"></div>
+      </div>
+    </section>
+
+    <!-- FLIGHT STATUS -->
+    <section class="page hidden" id="status">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Flight status</div>
+        <h2 class="title">Track a flight</h2>
+
+        <div class="twoCol">
+          <div class="card pad">
+            <b>Search</b>
+            <div class="grid" style="margin-top:10px">
+              <div><label>Flight #</label><input id="stFlight" placeholder="SJ 215"></div>
+              <div><label>Date</label><input id="stDate" type="date"></div>
+              <div class="span2"><button class="btn sun big" id="btnStatusSearch">Search status</button></div>
+            </div>
+            <div class="fine">Try: SJ 215 or SJ 232</div>
+          </div>
+
+          <div class="card pad">
+            <b>Results</b>
+            <div id="statusResults" class="note">Enter a flight number.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECK-IN -->
+    <section class="page hidden" id="checkin">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Online check-in</div>
+        <h2 class="title">Get your boarding pass</h2>
+
+        <div class="twoCol">
+          <div class="card pad">
+            <b>Find your booking</b>
+            <div class="grid" style="margin-top:10px">
+              <div><label>Confirmation code</label><input id="ciCode" placeholder="ABC123"></div>
+              <div><label>Last name</label><input id="ciLast" placeholder="BANAS"></div>
+              <div class="span2"><button class="btn sun big" id="btnCheckin">Check in</button></div>
+            </div>
+            <div class="fine">Demo code: ABC123 • Last name: SUNJET</div>
+          </div>
+
+          <div class="card pad">
+            <b>Boarding pass</b>
+            <div id="bp" class="note">Enter your code + last name.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANAGE -->
+    <section class="page hidden" id="manage">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Manage booking</div>
+        <h2 class="title">View / change your trip</h2>
+        <div class="twoCol">
+          <div class="card pad">
+            <b>Find booking</b>
+            <div class="grid" style="margin-top:10px">
+              <div><label>Confirmation</label><input id="mbCode" placeholder="ABC123"></div>
+              <div><label>Last name</label><input id="mbLast" placeholder="SUNJET"></div>
+              <div class="span2"><button class="btn sun big" id="btnManageFind">Find booking</button></div>
+            </div>
+          </div>
+          <div class="card pad">
+            <b>Your booking</b>
+            <div id="mbBox" class="note">Enter demo code to view booking.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTINATIONS -->
+    <section class="page hidden" id="dest">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Destinations</div>
+        <h2 class="title">Where SunJet flies</h2>
+        <p class="lede">Tap a destination to start booking.</p>
+        <div class="card pad" id="destGrid"></div>
+      </div>
+    </section>
+
+    <!-- FLEET -->
+    <section class="page hidden" id="fleet">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Fleet</div>
+        <h2 class="title">Airbus only</h2>
+        <div class="twoCol">
+          <div class="card pad" id="fleetCards"></div>
+          <div class="card pad">
+            <b>Why Airbus?</b>
+            <div class="note">
+              Common cockpit + parts = lower costs and faster training. Perfect for an ULCC.
+              <br><br><b>SunJet types:</b> A320ceo, A320neo, A321ceo, A321neo.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROUTE MAP -->
+    <section class="page hidden" id="map">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> SunJet network</div>
+        <h2 class="title">Route map</h2>
+        <div class="twoCol">
+          <div class="card pad">
+            <b>Network (demo)</b>
+            <div class="mapWrap">
+              <svg id="routeSvg" viewBox="0 0 900 520">
+                <path class="land" d="M192,82 C254,55 322,63 367,96 C407,124 454,139 482,176 C511,214 531,240 558,265 C590,295 615,317 620,350 C625,380 610,410 580,420 C530,437 476,424 444,398 C420,378 392,367 360,369 C313,372 270,395 232,382 C196,372 172,342 160,310 C147,271 155,248 140,218 C119,175 133,111 192,82 Z"></path>
+                <path class="land" d="M618,96 C676,82 726,108 754,146 C782,185 804,235 788,276 C772,318 744,352 717,384 C688,417 657,437 628,430 C593,421 595,382 596,350 C598,316 595,283 578,256 C559,226 543,206 549,177 C556,142 578,112 618,96 Z"></path>
+                <g id="routes"></g>
+                <g id="nodes"></g>
+              </svg>
+            </div>
+          </div>
+          <div class="card pad">
+            <b>Selected route</b>
+            <div class="note" id="mapInfo">No route selected yet.</div>
+            <div class="btnRow">
+              <button class="btn ghost" id="btnGoBook">Book</button>
+              <button class="btn sun" id="btnHighlight">Highlight my route</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HELP -->
+    <section class="page hidden" id="help">
+      <div class="wrap">
+        <div class="tag"><span class="dot"></span> Help Center</div>
+        <h2 class="title">Help Center</h2>
+        <div class="twoCol">
+          <div class="card pad">
+            <b>Bags & fees</b>
+            <div class="note">
+              Personal item included.<br>
+              Carry-on: +$49 • 1st checked: +$45 (unless included by bundle).
+            </div>
+          </div>
+          <div class="card pad">
+            <b>Contact</b>
+            <div class="note">
+              Demo support: 24/7 chat (fake).<br>
+              Email: help@sunjet.example
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">© <span id="y"></span> SunJet (fictional). Demo airline website.</div>
+  </footer>
+</div>
+<!-- ===== SUNJET ADD-ON PAGES ===== -->
+<section class="page hidden" id="sunmiles">
+  <h1>SunMiles ☀️</h1>
+  <div id="sunmilesBox"></div>
+</section>
+
+<section class="page hidden" id="fees">
+  <h1>Fees & Bundles</h1>
+  <div id="feesBox"></div>
+</section>
+
+<section class="page hidden" id="beforefly">
+  <h1>Before You Fly</h1>
+  <div id="beforeflyBox"></div>
+</section>
+
+<section class="page hidden" id="futureroutes">
+  <h1>Future Routes</h1>
+  <div id="futureroutesBox"></div>
+</section>
+
+<section class="page hidden" id="careers">
+  <h1>Careers</h1>
+  <div id="careersBox"></div>
+</section>
